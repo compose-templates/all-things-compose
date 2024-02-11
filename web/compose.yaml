@@ -1,0 +1,34 @@
+services:
+  redis-server:
+    image: redis:7.2.4
+    # Explain entrypoint (CMD)
+    #entrypoint: ["redis-server", "--save", "30", "1", "--loglevel", "warning"]
+    environment: 
+      - REDIS_ARGS="--save 30 1 --loglevel warning"
+    volumes:
+      - ./data:/data
+
+  bulk-loading:
+    image: redis:7.2.4
+    entrypoint: ["/tasks/bulk_loading.sh", "yes"]
+    volumes:
+      - ./tasks:/tasks
+    depends_on:
+      redis-server:
+        condition: service_started
+  
+  webapp:
+    build:        
+      #args:
+      context: ./web
+      dockerfile: Dockerfile
+    # docker compose watch
+    develop:
+      watch:
+        - action: rebuild
+          path: web
+    ports:
+      - 6060:8080
+    depends_on:
+      redis-server:
+        condition: service_started
