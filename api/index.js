@@ -7,6 +7,16 @@ fastify.register(require('@fastify/redis'), {
     port: 6379
 })
 
+fastify.register(require('@fastify/cors'), (instance) => {
+    return (req, callback) => {
+      const corsOptions = {
+        origin: process.env.FRONT_URL || "http://localhost:7070"
+      };
+      // callback expects two parameters: error and options
+      callback(null, corsOptions)
+    }
+})
+
 
 const { ADDRESS = '0.0.0.0', PORT = '8080' } = process.env;
 

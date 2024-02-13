@@ -1,12 +1,14 @@
 services:
   redis-server:
     image: redis:7.2.4
-    # Explain entrypoint (CMD)
-    #entrypoint: ["redis-server", "--save", "30", "1", "--loglevel", "warning"]
     environment: 
-      - REDIS_ARGS="--save 30 1 --loglevel warning"
+      - REDIS_ARGS="--save 30 1"
     volumes:
       - ./data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - backend
 
   bulk-loading:
     image: redis:7.2.4
@@ -16,30 +18,46 @@ services:
     depends_on:
       redis-server:
         condition: service_started
-  
+    networks:
+      - backend
+
   api:
     build:        
       context: ./api
       dockerfile: Dockerfile
+    environment:
+      - FRONT_URL=http://localhost:7070
+      # to allow the front to connect to the API (CORS, Cross-Origin Resource Sharing)
     ports:
       - 6060:8080
+      # query the API on http://localhost:6060/counter
     depends_on:
       redis-server:
         condition: service_started
-
+    networks:
+      - backend
+      - frontend
 
   webapp:
     build:        
-      #args:
       context: ./web
       dockerfile: Dockerfile
+    environment:
+      - API_URL=http://localhost:6060
     # docker compose watch
     develop:
       watch:
         - action: rebuild
-          path: web
+          path: web/templates
     ports:
       - 7070:8080
+      # open the webapp http://localhost:7070/
     depends_on:
-      redis-server:
+      api:
         condition: service_started
+    networks:
+      - frontend
+
+networks:
+  frontend:
+  backend:
