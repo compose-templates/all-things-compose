@@ -68,15 +68,15 @@
       }
       
       const intervalID = setInterval(function() {
-        fetch("/counter/panda").then(response => response.json()).then(data => setTagValue(tag_panda, `Panda`, data)).catch(err => console.log(err))
-        fetch("/counter/tiger").then(response => response.json()).then(data => setTagValue(tag_tiger, `Tiger`, data)).catch(err => console.log(err))
-        fetch("/counter/fox").then(response => response.json()).then(data => setTagValue(tag_fox, `Fox`, data)).catch(err => console.log(err))
-        fetch("/counter/hamster").then(response => response.json()).then(data => setTagValue(tag_hamster, `Hamster`, data)).catch(err => console.log(err))
+        fetch("http://api:8080/counter/panda").then(response => response.json()).then(data => setTagValue(tag_panda, `Panda`, data)).catch(err => console.log(err))
+        fetch("http://api:8080/counter/tiger").then(response => response.json()).then(data => setTagValue(tag_tiger, `Tiger`, data)).catch(err => console.log(err))
+        fetch("http://api:8080/counter/fox").then(response => response.json()).then(data => setTagValue(tag_fox, `Fox`, data)).catch(err => console.log(err))
+        fetch("http://api:8080/counter/hamster").then(response => response.json()).then(data => setTagValue(tag_hamster, `Hamster`, data)).catch(err => console.log(err))
       }, 1000);
 
       async function postJSON(data) {
         try {
-          const response = await fetch("/counter", {
+          const response = await fetch("http://api:8080/counter", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

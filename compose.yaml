@@ -10,13 +10,24 @@ services:
 
   bulk-loading:
     image: redis:7.2.4
-    entrypoint: ["/tasks/bulk_loading.sh", "yes"]
+    entrypoint: ["/load-data/bulk_loading.sh"]
     volumes:
-      - ./tasks:/tasks
+      - ./load-data:/load-data
     depends_on:
       redis-server:
         condition: service_started
   
+  api:
+    build:        
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 6060:8080
+    depends_on:
+      redis-server:
+        condition: service_started
+
+
   webapp:
     build:        
       #args:
@@ -28,7 +39,7 @@ services:
         - action: rebuild
           path: web
     ports:
-      - 6060:8080
+      - 7070:8080
     depends_on:
       redis-server:
         condition: service_started
