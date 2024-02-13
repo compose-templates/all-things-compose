@@ -35,3 +35,8 @@ networks:
   backend:
 
 ```
+
+restart `docker compose up`
+
+run again `node index.mjs` from the webapp container, 🎉
+
