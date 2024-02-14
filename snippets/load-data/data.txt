@@ -1,0 +1,5 @@
+SET hamster 12
+SET panda 12
+SET tiger 68
+SET fox 20
+

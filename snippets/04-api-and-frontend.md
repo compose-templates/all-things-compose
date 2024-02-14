@@ -1,8 +1,7 @@
-include:
-  - redis-server.yaml
-  - bulk-loading.yaml
 
-services:
+## API
+
+```yaml
   api:
     build:        
       context: ./api
@@ -16,30 +15,21 @@ services:
     depends_on:
       redis-server:
         condition: service_started
-    networks:
-      - backend
-      - frontend
+```
 
+## FrontEnd
+
+```yaml
   webapp:
     build:        
       context: ./web
       dockerfile: Dockerfile
     environment:
       - API_URL=http://localhost:6060
-    # docker compose watch
-    develop:
-      watch:
-        - action: rebuild
-          path: web/templates
     ports:
       - 7070:8080
-      # open the webapp http://localhost:7070/
+    # open the webapp http://localhost:7070/
     depends_on:
       api:
         condition: service_started
-    networks:
-      - frontend
-
-networks:
-  frontend:
-  backend:
+```

@@ -25,6 +25,8 @@ redis:7.2.4
 - Test it: `get message`
 - Stop and drop the container again
 
+# Redis 2/2
+
 ## Do it with Compose
 
 > Converting the `docker run` command to a **"yaml Compose service"**

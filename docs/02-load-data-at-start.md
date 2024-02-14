@@ -1,4 +1,4 @@
-# Redis 2/2
+# Load data to redis
 
 ✋ Stop Docker Compose
 
