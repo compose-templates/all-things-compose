@@ -1,8 +1,8 @@
 {
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Gitpod Dark",
-    "terminal.integrated.fontSize": 16,
-    "editor.fontSize": 16,
+    "workbench.colorTheme": "Alt Catppuccin Frappé",
+    "terminal.integrated.fontSize": 18,
+    "editor.fontSize": 18,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 3000,
     "editor.insertSpaces": true,

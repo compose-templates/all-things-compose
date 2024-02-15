@@ -10,7 +10,7 @@ RUN yarn install
 COPY . /app
 
 # Exposing server port
-EXPOSE 8080
+#EXPOSE 8080
 
 # Starting our application
 CMD [ "node", "index.js" ]

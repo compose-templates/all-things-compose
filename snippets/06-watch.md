@@ -9,7 +9,7 @@
     develop:
       watch:
         - action: rebuild
-          path: web/public
+          path: web/templates
     # use `docker compose watch`
     ports:
       - 7070:8080
