@@ -4,7 +4,7 @@ services:
     environment: 
       - REDIS_ARGS="--save 30 1"
     volumes:
-      - ./data:/data
+      - redis-data:/data
     ports:
       - 6379:6379
     networks:

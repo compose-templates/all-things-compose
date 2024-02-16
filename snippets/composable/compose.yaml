@@ -1,6 +1,5 @@
 include:
   - redis-server.yaml
-  - bulk-loading.yaml
 
 services:
   api:
@@ -29,8 +28,9 @@ services:
     # docker compose watch
     develop:
       watch:
-        - action: rebuild
+        - action: sync
           path: web/templates
+          target: app/templates
     ports:
       - 7070:8080
       # open the webapp http://localhost:7070/
@@ -43,3 +43,7 @@ services:
 networks:
   frontend:
   backend:
+
+volumes:
+  redis-data:
+    external: true

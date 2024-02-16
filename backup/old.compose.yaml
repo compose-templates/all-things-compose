@@ -4,9 +4,20 @@ services:
     environment: 
       - REDIS_ARGS="--save 30 1"
     volumes:
-      - redis-data:/data
+      - ./data:/data
     ports:
       - 6379:6379
+    networks:
+      - backend
+
+  bulk-loading:
+    image: redis:7.2.4
+    entrypoint: ["/load-data/bulk_loading.sh"]
+    volumes:
+      - ./load-data:/load-data
+    depends_on:
+      redis-server:
+        condition: service_started
     networks:
       - backend
 
@@ -50,7 +61,3 @@ services:
 networks:
   frontend:
   backend:
-
-volumes:
-  redis-data:
-    external: true

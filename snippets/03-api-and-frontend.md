@@ -1,11 +1,14 @@
 
-## API
-
 ```yaml
+    # ✋ redis-server
+    networks:
+      - backend
+
+  ## API
   api:
     build:        
       context: ./api
-      dockerfile: Dockerfile
+      dockerfile: api.Dockerfile
     environment:
       - FRONT_URL=http://localhost:7070
       # to allow the front to connect to the API (CORS, Cross-Origin Resource Sharing)
@@ -15,15 +18,16 @@
     depends_on:
       redis-server:
         condition: service_started
-```
+    networks:
+      - backend
+      - frontend
 
-## FrontEnd
 
-```yaml
+  ## FrontEnd
   webapp:
     build:        
       context: ./web
-      dockerfile: Dockerfile
+      dockerfile: web.Dockerfile
     environment:
       - API_URL=http://localhost:6060
     ports:
@@ -32,4 +36,10 @@
     depends_on:
       api:
         condition: service_started
+    networks:
+      - frontend
+
+networks:
+  frontend:
+  backend:
 ```

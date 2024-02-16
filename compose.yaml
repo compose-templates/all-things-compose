@@ -1,12 +1,11 @@
 include:
   - redis-server.yaml
-  - bulk-loading.yaml
 
 services:
   api:
     build:        
       context: ./api
-      dockerfile: Dockerfile
+      dockerfile: api.Dockerfile
     environment:
       - FRONT_URL=http://localhost:7070
       # to allow the front to connect to the API (CORS, Cross-Origin Resource Sharing)
@@ -23,14 +22,15 @@ services:
   webapp:
     build:        
       context: ./web
-      dockerfile: Dockerfile
+      dockerfile: web.Dockerfile
     environment:
       - API_URL=http://localhost:6060
     # docker compose watch
     develop:
       watch:
-        - action: rebuild
+        - action: sync
           path: web/templates
+          target: app/templates
     ports:
       - 7070:8080
       # open the webapp http://localhost:7070/
@@ -43,3 +43,9 @@ services:
 networks:
   frontend:
   backend:
+
+volumes:
+  redis-data:
+    external: true
+
+# https://docs.docker.com/compose/compose-file/compose-file-v2/#external

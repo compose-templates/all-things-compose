@@ -8,8 +8,9 @@
     # 👋 it's a new feature      
     develop:
       watch:
-        - action: rebuild
+        - action: sync
           path: web/templates
+          target: app/templates
     # use `docker compose watch`
     ports:
       - 7070:8080
